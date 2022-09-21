@@ -70,10 +70,10 @@ class PostController extends Controller
             $post = Post::find($id);
 
 
-            /*$post->usuario = is_null($request->usuario) ? $post->usuario : $request->usuario; n ta editando
+            $post->usuario = is_null($request->usuario) ? $post->usuario : $request->usuario;
             $post->titulo = is_null($request->titulo) ? $post->titulo : $request->titulo;
             $post->descricao = is_null($request->descricao) ? $post->descricao : $request->descricao;
-            */
+            
 
             $post->save();
 

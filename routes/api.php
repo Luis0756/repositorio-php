@@ -13,10 +13,10 @@ Route::delete('Post/destroy/{id}', [PostController::class, 'destroy']);
 Route::put('Post/editPost/{id}', [PostController::class, 'editPost']);
 Route::get('Post/show/{id}', [PostController::class, 'show']);
 
-//----------------------------------------------------------------------------------------------------------------------
+
 
 Route::post('Post/{id}/storeComment', [CommentController::class, 'storeComment']);
-Route::get('Post/{id}/indexComment', [CommentController::class, 'indexComment']);
-Route::delete('Post/{id}/destroyComment/{id_comments}', [CommentController::class, 'destroyComment']);
+Route::get('Post/{id}/index', [CommentController::class, 'index']);
+Route::delete('Post/{id}/destroy/{id_comments}', [CommentController::class, 'destroy']);
 Route::put('Post/{id}/editComment/{id_comments}', [CommentController::class, 'editComment']);
 Route::get('Post/{id}/showComment/{id_comments}', [CommentController::class, 'showComment']);
