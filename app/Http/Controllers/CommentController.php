@@ -11,13 +11,13 @@ use Illuminate\Support\Facades\Validator;
 class CommentController extends Controller
 {
   
-    public function index()
+    public function index(Request $request, $id)
     {
-        return Comment::all();
+        return Comment::where('fk_postagem_id', $id)->get();
     }
 
 
-    public function storeComment(Request $request)
+    public function storeComment(Request $request, $id)
     {
         $validated = Validator::make($request->all(),[
             'usuario' => ['required', 'max:30'],
@@ -48,7 +48,7 @@ class CommentController extends Controller
     }
 
 
-    public function showComment(Comment $comment)
+    public function showComment(Comment $comment, $id, $id_comments)
     {
         if (Comment::where('id', $id)->exists()) {
             $comment = Comment::where('id', $id)->get()->toJson(JSON_PRETTY_PRINT);
@@ -61,7 +61,7 @@ class CommentController extends Controller
     }
 
     
-    public function editComment(Comment $comment)
+    public function editComment(Comment $comment, $id, $id_comments)
     {
         if (Comment::where('id', $id)->exists()) {
 
@@ -84,19 +84,27 @@ class CommentController extends Controller
     }
 
 
-    public function destroy(Comment $comment)
+    public function destroy(Comment $comment, $id, $id_comments)
     {
-        if(Comment::where('id', $id)->exists()) {
-            $comment = Comment::find($id);
-            $comment->delete();
-    
+        if (Comment::where('id', $id_comments)->exists()) {
+
+            $comments = Comment::find($id_comments);
+
+            if (!($comments->fk_postagem_id == $id)) {
+                return response()->json([
+                    "message" => "Comentário não encontrado ou não existe nesse post"
+                ], 404);
+            }
+
+            $comments->delete();
+
             return response()->json([
-              "message" => "Comentário deletado"
+                "message" => "Comentário deletado"
             ], 202);
-          } else {
+        } else {
             return response()->json([
-              "message" => "Comentário não encontrado"
+                "message" => "Comentário não encontrado ou não existe"
             ], 404);
-          }
+        }
     }
 }
