@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CommentController extends Controller
 {
@@ -15,7 +17,7 @@ class CommentController extends Controller
     }
 
 
-    public function storeComment()
+    public function storeComment(Request $request)
     {
         $validated = Validator::make($request->all(),[
             'usuario' => ['required', 'max:30'],
